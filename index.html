@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Sophia's junkyard</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="design">
+    <div class="header">
+      <h1>Slay</h1>
+      <p>Confidence in Every Stitch</p>
+    </div>
+  </div>
+  <div class="products">
+    <!-- Product 1 -->
+    <div class="productCont">
+      <div class="productImage">
+        <p>Click to see different colors</p>
+        <img id="img1" src="products/product1.1.jpeg">
+      </div>
+      <div class="description">
+        <h3 class="title">Remy collar top</h3>
+        <div class="desc">
+          <h3>✨PLUS SIZE COLLAR TOP✨</h3>
+          <p>•Med-Xl<br> •Available Colors: HotPink, Green & Black</p>
+        </div>
+        <p class="price">Price: 120₱</p>
+        <select id="colorSelect1">
+          <option value="HotPink">Hot Pink</option>
+          <option value="Green">Green</option>
+          <option value="Black">Black</option>
+        </select>
+        <button onclick="selectProduct('Remy collar top', '120₱', document.getElementById('colorSelect1').value)">Check out</button>
+      </div>
+    </div>
+
+    <!-- Product 2 -->
+    <div class="productCont">
+      <div class="productImage">
+        <p>Click to see different colors</p>
+        <img id="picture" src="products/product2.jpeg">
+      </div>
+      <div class="description">
+        <h3 class="title">Anne sexy top</h3>
+        <div class="desc">
+          <h3>✨Anne Sexy Top✨</h3>
+          <p>•Med-Extra Large<br> •Choco Xl-2xl<br> •Crepe Fabric<br> AVAILABLE COLORS: Light Brown, Brown & Olive Green</p>
+        </div>
+        <p class="price">Price: 150₱</p>
+        <select id="colorSelect2">
+          <option value="Light Brown">Light Brown</option>
+          <option value="Brown">Brown</option>
+          <option value="Olive Green">Olive Green</option>
+        </select>
+        <button onclick="selectProduct('Anne sexy top', '150₱', document.getElementById('colorSelect2').value)">Check out</button>
+      </div>
+    </div>
+
+    <!-- Product 3 -->
+    <div class="productCont">
+      <div class="productImage">
+        <p>Click to see different colors</p>
+        <img id="ulol" src="products/product3.jpeg">
+      </div>
+      <div class="description">
+        <h3 class="title">LISA PALDA SHORTS </h3>
+        <div class="desc">
+          <p>✓Crepe fabric<br> 
+✓Skort<br>
+✓Midsize: M-2XL<br>
+✓onhand ready to ship/deliver<br>
+✓ Limited stocks only<br>
+AVAILABLE COLORS: RED, BLACK, PINK, LAVENDER & </p>
+        </div>
+        <p class="price">Price: 130₱</p>
+        <select id="colorSelect3">
+          <option value="red">RED</option>
+          <option value="black">BLACK</option>
+          <option value="pink">PINK</option>
+          <option value="lavender">LAVENDER</option>
+        </select>
+        <button onclick="selectProduct('Lisa Palda Short', '130₱', document.getElementById('colorSelect3').value)">Check out</button>
+      </div>
+    </div>
+  </div>
+  <footer>
+    <a href="https://www.facebook.com/sophia.delotavo?mibextid=ZbWKwL">Contact us</a>
+    <a href="https://www.facebook.com/sophia.delotavo?mibextid=ZbWKwL">Support</a>
+    <a href="https://www.facebook.com/sophia.delotavo?mibextid=ZbWKwL">Any question? ask me here</a>
+  </footer>
+  <script src="image.js"></script>
+  <script>
+    function selectProduct(productName, productPrice, selectedColor) {
+      localStorage.setItem('selectedProduct', productName);
+      localStorage.setItem('productPrice', productPrice);
+      localStorage.setItem('selectedColor', selectedColor);
+      window.location.href = 'billing.html';
+    }
+  </script>
+</body>
+</html>

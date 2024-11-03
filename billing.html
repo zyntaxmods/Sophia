@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Billing - Sophia's Junkyard</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="billing.css">
+  <script src="https://js.api.here.com/v3/3.1/mapsjs-core.js"></script>
+  <script src="https://js.api.here.com/v3/3.1/mapsjs-service.js"></script>
+  <script src="https://js.api.here.com/v3/3.1/mapsjs-ui.js"></script>
+  <script src="https://js.api.here.com/v3/3.1/mapsjs-mapevents.js"></script>
+  <link rel="stylesheet" href="https://js.api.here.com/v3/3.1/mapsjs-ui.css">
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    .billing-container {
+      padding: 20px;
+      max-width: 800px;
+      margin: auto;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    #map {
+      width: 100%;
+      height: 400px;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="billing-container">
+    <h1>Select Your Location</h1>
+    <div id="map"></div>
+    <div class="cont">
+      <form action="https://formspree.io/f/mdkoewvv" method="POST">
+        <h3>Fill up your information</h3>
+        <p>Information has been encrypted; we prioritize your safety</p>
+        <div class="formCont">
+          <input type="email" name="email" placeholder="Enter your Email" required>
+          <input type="number" name="contact" placeholder="Enter your contact number" required>
+          <input id="locationInput" name="location" type="text" placeholder="Your Location" required>
+          <input id="orderInput" name="order" type="text" placeholder="Your Order" required readonly>
+          <input id="colorInput" name="color" type="text" placeholder="Selected Color" required readonly>
+          <button type="submit">SUBMIT</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    var platform = new H.service.Platform({
+      apikey: 'TK-L0XZO3FEcMGw6hex2qGzkuYcQJq4cHBlTpscKJ9k'
+    });
+    var defaultLayers = platform.createDefaultLayers();
+    var map = new H.Map(
+      document.getElementById('map'),
+      defaultLayers.raster.satellite.map,
+      {
+        center: { lat: 10.799680, lng: 122.975288 },
+        zoom: 20,
+        pixelRatio: window.devicePixelRatio || 1
+      }
+    );
+
+    var behavior = new H.mapevents.Behavior(new H.mapevents.MapEvents(map));
+    var ui = H.ui.UI.createDefault(map, defaultLayers);
+
+    var marker = new H.map.Marker(map.getCenter(), { volatility: true });
+    marker.draggable = true;
+    map.addObject(marker);
+
+    function updateLocationInput(lat, lng) {
+      var url = `https://revgeocode.search.hereapi.com/v1/revgeocode?at=${lat},${lng}&apiKey=TK-L0XZO3FEcMGw6hex2qGzkuYcQJq4cHBlTpscKJ9k`;
+
+      fetch(url)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          return response.json();
+        })
+        .then(data => {
+          if (data.items && data.items.length > 0) {
+            var address = data.items[0].address.label;
+            document.getElementById('locationInput').value = address;
+            console.log('Address updated to:', address);
+          } else {
+            document.getElementById('locationInput').value = 'Location not found';
+          }
+        })
+        .catch(error => {
+          console.error('Geocoding error:', error);
+        });
+    }
+
+    marker.addEventListener('dragend', function(evt) {
+      var coord = marker.getGeometry();
+      console.log('Marker dragged to:', coord.lat, coord.lng);
+      updateLocationInput(coord.lat, coord.lng);
+    });
+
+    map.addEventListener('mapviewchangeend', function() {
+      var center = map.getCenter();
+      marker.setGeometry(center);
+      console.log('Map center changed to:', center.lat, center.lng);
+      updateLocationInput(center.lat, center.lng);
+    });
+
+    updateLocationInput(marker.getGeometry().lat, marker.getGeometry().lng);
+  </script>
+  <script>
+    window.onload = function() {
+      const product = localStorage.getItem('selectedProduct');
+      const price = localStorage.getItem('productPrice');
+      const color = localStorage.getItem('selectedColor');
+      const orderInput = document.getElementById('orderInput');
+      const colorInput = document.getElementById('colorInput');
+
+      if (orderInput) {
+        if (product && price) {
+          orderInput.value = `${product} - ${price}`;
+          colorInput.value = color ? color : "No color selected";
+        } else {
+          orderInput.value = "No product selected";
+          colorInput.value = "No color selected";
+        }
+      } else {
+        console.error("orderInput element not found");
+      }
+    };
+  </script>
+</body>
+</html>
