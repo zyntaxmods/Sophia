@@ -5,7 +5,7 @@
 }
 body{
   background-color: #faf3d6;
-  overflow: hidden;
+  overflow: scroll;
 }
 @font-face{
  font-family: sophia;
@@ -170,7 +170,7 @@ footer{
   align-items: center;
   margin:auto;
   width:100vw;
-  height:200px;
+  height:250px;
   margin-top:150px;
   background-color:black;
 }
