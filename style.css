@@ -138,7 +138,7 @@ body{
   justify-content: space-evenly;
   flex-wrap: wrap;
 }
-@media (max-width: 360px){
+@media screen and (max-width: 360px){
   .header h1,p{
     font-size:25px;
   }
