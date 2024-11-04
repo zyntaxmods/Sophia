@@ -6,6 +6,7 @@
 body{
   background-color: #faf3d6;
   overflow: scroll;
+  overflow-x:hidden;
 }
 @font-face{
  font-family: sophia;
