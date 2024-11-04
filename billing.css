@@ -46,7 +46,7 @@
 .formCont input:focus{
   outline: none;
 }
-@media (max-width: 360px){
+@media screen and (max-width: 500px){
   .formCont{
     width:100px;
     margin-top:20px;
